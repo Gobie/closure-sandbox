@@ -7,6 +7,8 @@ module.exports = (g, gsize, config) ->
     sprite = require('css-sprite').stream
     gconnect = require 'gulp-connect'
     grename = require 'gulp-rename'
+    gpostcss = require 'gulp-postcss'
+    autoprefixer = require 'autoprefixer-core'
 
     filterImagesForSprite = gfilter '*.png'
     filterSpriteImage = gfilter config.paths.sprites.namePng
@@ -47,6 +49,9 @@ module.exports = (g, gsize, config) ->
       .pipe(filterMainLess)
       .pipe(gless())
       .pipe(grename config.paths.less.nameCSS)
+      .pipe(gpostcss([
+        autoprefixer(browsers: ['last 2 versions'])
+      ]))
 
     if config.argv.production
       gminify = require 'gulp-minify-css'
