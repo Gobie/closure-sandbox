@@ -1,3 +1,4 @@
+host = process.env.HOST or 'localhost'
 port = process.env.PORT or 9000
 livereloadPort = process.env.LIVERELOAD_PORT or 35730
 env = process.env.NODE_ENV or 'development'
@@ -49,10 +50,11 @@ g.task 'serve', ->
 
   gconnect.server
     root: [config.paths.app.dst]
+    host: host
     port: port
     livereload: liverload
 
-  open 'http://localhost:' + port
+  open "http://#{host}:#{port}"
 
 g.task 'default', ['build'], ->
   return
